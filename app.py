@@ -1,5 +1,5 @@
-import giveText
+import giveSummary
 
 
 
-print(giveText.text)
+print(giveSummary.text)
