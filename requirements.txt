@@ -70,7 +70,6 @@ networkx==3.4.1
 numba==0.60.0
 numpy==1.26.4
 openai==1.51.2
-openai-whisper @ git+https://github.com/openai/whisper.git@25639fc17ddc013d56c594bfbf7644f2185fad84
 orjson==3.10.7
 packaging==24.1
 pafy==0.5.5
