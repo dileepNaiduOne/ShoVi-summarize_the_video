@@ -1,9 +1,9 @@
 import giveSummary
 import streamlit as st
 
+# st.set_page_config(layout="wide")
 
-
-st.title("ShoVi - Shorten the Video")
+##########################################################################################
 
 st.components.v1.html(
     """
@@ -12,14 +12,53 @@ st.components.v1.html(
     """, height=400
 )
 
-uploaded_audio_file = st.file_uploader("Upload an audio file", type=["mp3"])
-aai_api_key = "c323ab05a7bc4302ac1246aaec21416c"
+##########################################################################################
+st.header("Enter your :red[Assembly AI API Key :]")
+aai_api_key = st.text_input(" ", type='password')
 
-got_text = giveSummary.change_audio_to_text(
-    uploaded_audio_file, 
-    aai_api_key
-    )
+with st.expander(":red-background[Don't have API Key]...Click here to get it for, FREE!"):
+    st.write(f"""
+    1. Go to Assmeble AI Website https://www.assemblyai.com/dashboard/signup
+    2. Signup with your mail and password. Don't want to give your mail,
+            use https://temp-mail.org/en/ and get a temporary disposable
+            email. And use that!
+    3. Now you will be seeing "Welcome to AssemblyAI". On screen there will a variable like
+            "aai.settings.api_key = "8b8a**y***43**8rgh*********e*****e817".
+            This long alphanumeric word is you api_key.
+    4. Now copy and paste this api_key in the ShoVi's homepage.
+    """)
 
-models_summary = giveSummary.do_summarize(got_text)
+##########################################################################################
 
-st.write(models_summary)
+st.write("")
+st.header("", divider="gray")
+st.write("")
+st.write("")
+
+##########################################################################################
+st.header(":red[Upload an audio file : ]")
+uploaded_audio_file = st.file_uploader(" ", type=["mp3"])  
+
+##########################################################################################
+
+st.write("")
+st.header("", divider="gray")
+st.write("")
+# st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
+
+##########################################################################################
+
+if uploaded_audio_file and aai_api_key:
+    st.header(":red[Summary]")
+    got_text = giveSummary.change_audio_to_text(
+        uploaded_audio_file, 
+        aai_api_key
+        )
+
+    with st.expander(":red-background[Click here to read the transcript] of your audio file"):
+        st.write(got_text)
+
+    
+    models_summary = giveSummary.do_summarize(got_text)
+
+    st.write(models_summary)
