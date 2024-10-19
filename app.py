@@ -2,6 +2,22 @@ import giveSummary
 import streamlit as st
 
 # st.set_page_config(layout="wide")
+st.set_page_config(page_title="■■ ShoVi", page_icon="logo.png")
+
+# st.image("https://raw.githubusercontent.com/dileepNaiduOne/ShoVi-summarize_the_video/refs/heads/main/logo.png")
+# page_bg_img = """
+#     <style>
+#         [data-testid="stMain"] 
+#             {
+#                 background-image: url("https://images.unsplash.com/photo-1728996152930-233c5aca21d7?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+#                 background-size: 180%;
+#                 background-position: top left;
+#                 background-repeat: no-repeat;
+#                 background-attachment: local; 
+#             }
+#     </style>
+# """
+# st.html(page_bg_img)
 
 ##########################################################################################
 
