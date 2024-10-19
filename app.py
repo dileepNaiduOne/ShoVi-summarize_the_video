@@ -23,8 +23,8 @@ st.set_page_config(page_title="■■ ShoVi", page_icon="logo.png")
 
 st.components.v1.html(
     """
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
-    <spline-viewer url="https://prod.spline.design/4lVGPqOvqbo2ky9O/scene.splinecode"></spline-viewer>
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
+        <spline-viewer url="https://prod.spline.design/VdI2sooy4f-DkOs4/scene.splinecode"></spline-viewer>
     """, height=400
 )
 
@@ -50,8 +50,10 @@ with st.expander(":red-background[Don't have API Key]...Click here to get it for
 st.header("", divider="gray")
 
 ##########################################################################################
-st.header(":red[Upload an audio file : ]")
-uploaded_audio_file = st.file_uploader(" ", type=["mp3"])
+file_formats_urls = r"https://www.assemblyai.com/docs/Concepts/faq"
+
+st.header("Upload your :red[Audio/Video] File : ")
+uploaded_audio_file = st.file_uploader(label = "", type = [".mp3", ".mp4", ".wav"])
 if aai_api_key and not uploaded_audio_file:
     st.toast(body="API Key Uploaded", icon="👍") 
 if uploaded_audio_file and not aai_api_key:
