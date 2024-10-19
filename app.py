@@ -41,8 +41,8 @@ with st.expander(":red-background[Don't have API Key]...Click here to get it for
             email. And use that!
     3. Now you will be seeing "Welcome to AssemblyAI". On screen there will a variable like
             "aai.settings.api_key = "8b8a**y***43**8rgh*********e*****e817".
-            This long alphanumeric word is you api_key.
-    4. Now copy and paste this api_key in the ShoVi's homepage.
+            This long alphanumeric word is your api_key.
+    4. Now copy and paste this api_key in the above input box.
     """)
 
 ##########################################################################################
