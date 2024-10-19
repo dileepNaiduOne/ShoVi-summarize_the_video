@@ -32,6 +32,7 @@ st.components.v1.html(
 st.header("Enter your :red[Assembly AI API Key :]")
 aai_api_key = st.text_input(" ", type='password')
 
+
 with st.expander(":red-background[Don't have API Key]...Click here to get it for, FREE!"):
     st.write(f"""
     1. Go to Assmeble AI Website https://www.assemblyai.com/dashboard/signup
@@ -46,35 +47,35 @@ with st.expander(":red-background[Don't have API Key]...Click here to get it for
 
 ##########################################################################################
 
-st.write("")
 st.header("", divider="gray")
-st.write("")
-st.write("")
 
 ##########################################################################################
 st.header(":red[Upload an audio file : ]")
-uploaded_audio_file = st.file_uploader(" ", type=["mp3"])  
+uploaded_audio_file = st.file_uploader(" ", type=["mp3"])
+if aai_api_key and not uploaded_audio_file:
+    st.toast(body="API Key Uploaded", icon="👍") 
+if uploaded_audio_file and not aai_api_key:
+    st.toast(body="Audio File Uploaded", icon="👍")
 
 ##########################################################################################
 
-st.write("")
 st.header("", divider="gray")
-st.write("")
 # st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
 
 ##########################################################################################
 
 if uploaded_audio_file and aai_api_key:
+    st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
     st.header(":red[Summary]")
     got_text = giveSummary.change_audio_to_text(
         uploaded_audio_file, 
         aai_api_key
         )
-
-    with st.expander(":red-background[Click here to read the transcript] of your audio file"):
-        st.write(got_text)
-
     
     models_summary = giveSummary.do_summarize(got_text)
 
     st.write(models_summary)
+    if models_summary:
+        st.toast(body="Summarized your File", icon="✅")
+        with st.expander(":red-background[Click here to read the transcript] of your audio file"):
+            st.write(got_text)
