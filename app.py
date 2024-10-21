@@ -1,5 +1,6 @@
-import giveSummary
+import giveSummary, extractTextfromPDF
 import streamlit as st
+from streamlit_option_menu import option_menu
 
 # st.set_page_config(layout="wide")
 st.set_page_config(page_title="■■ ShoVi", page_icon="logo.png")
@@ -20,7 +21,7 @@ st.set_page_config(page_title="■■ ShoVi", page_icon="logo.png")
 # st.html(page_bg_img)
 
 ##########################################################################################
-
+# For Spline 3D Eleement 
 st.components.v1.html(
     """
         <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
@@ -29,7 +30,8 @@ st.components.v1.html(
 )
 
 ##########################################################################################
-st.header("Enter your :red[Assembly AI API Key :]")
+# For Assemble AI API Key
+st.header("Enter your :red[Assembly AI API Key] :")
 aai_api_key = st.text_input(" ", type='password')
 
 
@@ -50,34 +52,128 @@ with st.expander(":red-background[Don't have API Key]...Click here to get it for
 st.header("", divider="gray")
 
 ##########################################################################################
-file_formats_urls = r"https://www.assemblyai.com/docs/Concepts/faq"
 
-st.header("Upload your :red[Audio/Video] File : ")
-uploaded_audio_file = st.file_uploader(label = "", type = [".mp3", ".mp4", ".wav"])
-if aai_api_key and not uploaded_audio_file:
-    st.toast(body="API Key Uploaded", icon="👍") 
-if uploaded_audio_file and not aai_api_key:
-    st.toast(body="Audio File Uploaded", icon="👍")
+st.header(":red[Summarize]....")
 
-##########################################################################################
-
-st.header("", divider="gray")
-# st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
+selected = option_menu(
+    menu_title = None,
+    options = ["Audio/Video", "Text", "Youtube Link"],
+    icons = ["camera-reels", "file-text", "youtube"],
+    orientation="horizontal",
+    default_index=0
+)
 
 ##########################################################################################
+##########################################################################################
+if selected == "Audio/Video":
+    file_formats_urls = r"https://www.assemblyai.com/docs/Concepts/faq"
 
-if uploaded_audio_file and aai_api_key:
-    st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
-    st.header(":red[Summary]")
-    got_text = giveSummary.change_audio_to_text(
-        uploaded_audio_file, 
-        aai_api_key
+    # Checking condition for inputs
+    uploaded_audio_file = st.file_uploader(label = "Upload your :red[Audio/Video] File", type = [".mp3", ".mp4", ".wav"])
+    if aai_api_key and not uploaded_audio_file:
+        st.toast(body="API Key Uploaded", icon="👍") 
+    if uploaded_audio_file and not aai_api_key:
+        st.toast(body="Audio File Uploaded", icon="👍")
+
+    #-----------------------------------------------------------------------------------------
+
+    st.header("", divider="gray")
+    # st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
+
+    #-----------------------------------------------------------------------------------------
+
+    if uploaded_audio_file and aai_api_key:
+        st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
+        # st.header(":red[Summary]")
+        got_text = giveSummary.change_audio_to_text(
+            uploaded_audio_file, 
+            aai_api_key
+            )
+        
+        models_summary = giveSummary.do_summarize(got_text)
+
+        st.write(models_summary)
+        if models_summary:
+            st.toast(body="Summarized your File", icon="✅")
+            with st.expander(":red-background[Click here to read the transcript] of your audio file"):
+                st.write(got_text)
+##########################################################################################
+##########################################################################################
+if selected == "Text":
+    toggle_on = st.toggle(
+        ":red[Manual Input]",
+        help="Turn on for 'Text Input', turn off for 'PDF Upload'"
         )
     
-    models_summary = giveSummary.do_summarize(got_text)
 
-    st.write(models_summary)
-    if models_summary:
-        st.toast(body="Summarized your File", icon="✅")
-        with st.expander(":red-background[Click here to read the transcript] of your audio file"):
-            st.write(got_text)
+    if toggle_on:
+        got_text = st.text_area("Type/ Paste your :red[text] :")
+
+        if aai_api_key and not got_text:
+            st.toast(body="API Key Uploaded", icon="👍") 
+        if got_text and not aai_api_key:
+            st.toast(body="Text Uploaded", icon="👍")
+
+#------------------------------------------------------------------------------------------------
+
+        st.header("", divider="gray")
+
+#------------------------------------------------------------------------------------------------
+
+        if got_text and aai_api_key:
+            st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
+
+            print(got_text)
+            got_text = list(filter(lambda y : len(y)>0, list(map(lambda x : x.strip(), got_text.split(" ")))))[:20_00_000]
+            print(got_text)
+
+            words_count = len(got_text)
+            print(words_count)
+
+            got_text = " ".join(got_text)
+            print(got_text)
+
+
+            
+            
+            models_summary = giveSummary.do_summarize(got_text)
+
+            st.write(models_summary)
+            st.write(f"This summary is generated using :red[{words_count} words] from your input")
+
+            if models_summary:
+                st.toast(body="Summarized your File", icon="✅")
+                with st.expander(":red-background[Click here to read the transcript] of your text"):
+                    st.write(got_text)
+
+# ----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
+
+    if not toggle_on:
+        uploaded_text_file = st.file_uploader(label = "Upload your :red[PDF] File :", type = [".pdf"])
+
+        if aai_api_key and not uploaded_text_file:
+            st.toast(body="API Key Uploaded", icon="👍") 
+        if uploaded_text_file and not aai_api_key:
+            st.toast(body="PDF File Uploaded", icon="👍")
+
+#------------------------------------------------------------------------------------------------
+
+        st.header("", divider="gray")
+
+#------------------------------------------------------------------------------------------------
+
+        if uploaded_text_file and aai_api_key:
+            st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
+
+            got_text, words_count = extractTextfromPDF.pullText(uploaded_text_file.read())
+
+            models_summary = giveSummary.do_summarize(got_text)
+            st.write(models_summary)
+            st.write(f"This summary is generated using :red[{words_count} words] from your input")
+
+            if models_summary:
+                st.toast(body="Summarized your File", icon="✅")
+                with st.expander(":red-background[Click here to read the transcript] of your PDF file"):
+                    st.write(got_text)
+
