@@ -18,6 +18,6 @@ def pullText(pdfFile):
 
     return (pdfText, words_count)
 
-print(pullText(r"C:\Users\DILEEP PATCHA\Desktop\Books\Complete MBA For Dummies.pdf")[1])
+# print(pullText(r"C:\Users\DILEEP PATCHA\Desktop\Books\Complete MBA For Dummies.pdf")[1])
 
 
