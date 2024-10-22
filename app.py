@@ -42,7 +42,6 @@ selected = option_menu(
 ##########################################################################################
 ##########################################################################################
 if selected == "Audio/Video":
-    ##########################################################################################
     # For Assemble AI API Key
     # st.header("Enter your :red[Assembly AI API Key] :")
     aai_api_key = st.text_input("Enter your :red[Assembly AI API Key] :", type='password')
@@ -60,7 +59,7 @@ if selected == "Audio/Video":
         4. Now copy and paste this api_key in the above input box.
         """)
 
-    ##########################################################################################
+    #-----------------------------------------------------------------------------------------
 
     # st.markdown("---")
     st.header("", divider="gray")
@@ -68,7 +67,8 @@ if selected == "Audio/Video":
     st.write(" ")
     st.write(" ")
 
-    ##########################################################################################
+    #-----------------------------------------------------------------------------------------
+
     file_formats_urls = r"https://www.assemblyai.com/docs/Concepts/faq"
 
     # Checking condition for inputs
@@ -80,14 +80,11 @@ if selected == "Audio/Video":
 
     #-----------------------------------------------------------------------------------------
 
-    st.header("", divider="gray")
-    st.write(" ")
-    st.write(" ")
-    # st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
-
-    #-----------------------------------------------------------------------------------------
-
     if uploaded_audio_file and aai_api_key:
+        st.header("", divider="gray")
+        st.write(" ")
+        st.write(" ")
+
         st.toast(body="Started Processing. Summary will be given :red[very soon]", icon="🏋️‍♂️")
         st.header(":red[ShoViazaa]....")
         got_text = giveSummary.change_audio_to_text(
@@ -103,6 +100,7 @@ if selected == "Audio/Video":
             st.toast(body="Summarized your File", icon="✅")
             with st.expander(":red-background[Click here to read the transcript] of your audio file"):
                 st.write(got_text)
+    st.header("", divider="gray")
 ##########################################################################################
 ##########################################################################################
 if selected == "Text":
@@ -114,17 +112,16 @@ if selected == "Text":
 
     if toggle_on:
         got_text = st.text_area("Type/ Paste your :red[text] :")
-        st.write(":red[Note]: As this app uses an LLM to summarize content, so only the :red[first 15,000 words of input will be processed] to the LLM. Remaining words will be dumped")
-
-#------------------------------------------------------------------------------------------------
-
-        st.header("", divider="gray")
-        st.write(" ")
-        st.write(" ")
+        st.write(":red-background[Note]: As this app uses an LLM to summarize content, so only the :red[first 15,000 words of input will be processed] to the LLM. Remaining words will be dumped")
 
 #------------------------------------------------------------------------------------------------
 
         if got_text:
+            st.header("", divider="gray")
+            st.write(" ")
+            st.write(" ")
+
+
             st.toast(body="Started Processing. Summary will be given :red[very soon]", icon="🏋️‍♂️")
             st.header(":red[ShoViazaa]....")
 
@@ -135,7 +132,7 @@ if selected == "Text":
             models_summary = giveSummary.do_summarize(got_text)
 
             st.write(models_summary)
-            st.write(f"This summary is generated using :red[{words_count} words] from your input")
+            st.caption(f"This summary is generated using :red[{words_count} words] from your input")
 
             if models_summary:
                 st.toast(body="Summarized your File", icon="✅")
@@ -147,18 +144,15 @@ if selected == "Text":
 
     if not toggle_on:
         uploaded_text_file = st.file_uploader(label = "Upload your :red[PDF] File :", type = [".pdf"])
-        st.write(":red[Note]: As this app uses an LLM to summarize content, so only the :red[first 15,000 words of input will be processed] to the LLM. Remaining words will be dumped")
-
-
-#------------------------------------------------------------------------------------------------
-
-        st.header("", divider="gray")
-        st.write(" ")
-        st.write(" ")
+        st.write(":red-background[Note]: As this app uses an LLM to summarize content, so only the :red[first 15,000 words of input will be processed] to the LLM. Remaining words will be dumped")
 
 #------------------------------------------------------------------------------------------------
 
         if uploaded_text_file:
+            st.header("", divider="gray")
+            st.write(" ")
+            st.write(" ")
+
             st.toast(body="Started Processing. Summary will be given :red[very soon]", icon="🏋️‍♂️")
             st.header(":red[ShoViazaa]....")
 
@@ -168,10 +162,26 @@ if selected == "Text":
 
             models_summary = giveSummary.do_summarize(got_text)
             st.write(models_summary)
-            st.write(f"This summary is generated using :red[{words_count} words] from your input")
+            st.caption(f"This summary is generated using :red[{words_count} words] from your input")
 
             if models_summary:
                 st.toast(body="Summarized your File", icon="✅")
                 with st.expander(":red-background[Click here to read the transcript] of your PDF file"):
                     st.write(got_text)
 
+    st.header("", divider="gray")
+
+##########################################################################################
+##########################################################################################
+if selected == "Youtube Link":
+    st.write("""
+             Due to YouTube's Terms and Conditions, Can't able to get the Youtube Video's Data. You can :red[download the YouTube video and upload that in Video/Audio Section] 
+             1. :red-background[YouTube] Video to :red-background[audio] downlaoder  ---  https://ezmp3.cc/
+             2. :red-background[YouTube] Video to :red-background[video] downlaoder  ---  https://en1.savefrom.net/2ol/
+             """)
+    st.header("", divider="gray")
+##########################################################################################
+##########################################################################################
+
+
+st.link_button("Connect with me via LinkedIn", icon=":material/person_raised_hand:", url=r"https://www.linkedin.com/in/dileepnaidu/")
