@@ -83,14 +83,13 @@ if selected == "Audio/Video":
     st.header("", divider="gray")
     st.write(" ")
     st.write(" ")
-    st.write(" ")
     # st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
 
     #-----------------------------------------------------------------------------------------
 
     if uploaded_audio_file and aai_api_key:
-        st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
-        # st.header(":red[Summary]")
+        st.toast(body="Started Processing. Summary will be given :red[very soon]", icon="🏋️‍♂️")
+        st.header(":red[ShoViazaa]....")
         got_text = giveSummary.change_audio_to_text(
             uploaded_audio_file, 
             aai_api_key
@@ -109,24 +108,25 @@ if selected == "Audio/Video":
 if selected == "Text":
     toggle_on = st.toggle(
         ":red[Manual Input]",
-        help="Turn on for 'Text Input', turn off for 'PDF Upload'"
+        help="Turn on for 'Text Input'. Turn off for 'PDF Upload'"
         )
     
 
     if toggle_on:
         got_text = st.text_area("Type/ Paste your :red[text] :")
+        st.write(":red[Note]: As this app uses an LLM to summarize content, so only the :red[first 15,000 words of input will be processed] to the LLM. Remaining words will be dumped")
 
 #------------------------------------------------------------------------------------------------
 
         st.header("", divider="gray")
         st.write(" ")
         st.write(" ")
-        st.write(" ")
 
 #------------------------------------------------------------------------------------------------
 
         if got_text:
-            st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
+            st.toast(body="Started Processing. Summary will be given :red[very soon]", icon="🏋️‍♂️")
+            st.header(":red[ShoViazaa]....")
 
             got_text = list(filter(lambda y : len(y)>0, list(map(lambda x : x.replace("\n", "").strip().replace("{", "(").replace("}", ")"), got_text.split(" ")))))[:15_000]
             words_count = len(got_text)
@@ -147,20 +147,23 @@ if selected == "Text":
 
     if not toggle_on:
         uploaded_text_file = st.file_uploader(label = "Upload your :red[PDF] File :", type = [".pdf"])
+        st.write(":red[Note]: As this app uses an LLM to summarize content, so only the :red[first 15,000 words of input will be processed] to the LLM. Remaining words will be dumped")
+
 
 #------------------------------------------------------------------------------------------------
 
         st.header("", divider="gray")
         st.write(" ")
         st.write(" ")
-        st.write(" ")
 
 #------------------------------------------------------------------------------------------------
 
         if uploaded_text_file:
-            st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
+            st.toast(body="Started Processing. Summary will be given :red[very soon]", icon="🏋️‍♂️")
+            st.header(":red[ShoViazaa]....")
 
             got_text, words_count = extractTextfromPDF.pullText(uploaded_text_file)
+            # print(words_count)
             
 
             models_summary = giveSummary.do_summarize(got_text)
