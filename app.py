@@ -29,30 +29,6 @@ st.components.v1.html(
     """, height=400
 )
 
-##########################################################################################
-# For Assemble AI API Key
-st.header("Enter your :red[Assembly AI API Key] :")
-aai_api_key = st.text_input(" ", type='password')
-
-
-with st.expander(":red-background[Don't have API Key]...Click here to get it for, FREE!"):
-    st.write(f"""
-    1. Go to Assmeble AI Website https://www.assemblyai.com/dashboard/signup
-    2. Signup with your mail and password. Don't want to give your mail,
-            use https://temp-mail.org/en/ and get a temporary disposable
-            email. And use that!
-    3. Now you will be seeing "Welcome to AssemblyAI". On screen there will a variable like
-            "aai.settings.api_key = "8b8a**y***43**8rgh*********e*****e817".
-            This long alphanumeric word is your api_key.
-    4. Now copy and paste this api_key in the above input box.
-    """)
-
-##########################################################################################
-
-st.header("", divider="gray")
-
-##########################################################################################
-
 st.header(":red[Summarize]....")
 
 selected = option_menu(
@@ -66,10 +42,37 @@ selected = option_menu(
 ##########################################################################################
 ##########################################################################################
 if selected == "Audio/Video":
+    ##########################################################################################
+    # For Assemble AI API Key
+    # st.header("Enter your :red[Assembly AI API Key] :")
+    aai_api_key = st.text_input("Enter your :red[Assembly AI API Key] :", type='password')
+
+
+    with st.expander(":red-background[Don't have API Key]...:red[Click here] to get it for, FREE!"):
+        st.write(f"""
+        1. Go to Assmeble AI Website https://www.assemblyai.com/dashboard/signup
+        2. Signup with your mail and password. Don't want to give your mail,
+                use https://temp-mail.org/en/ and get a temporary disposable
+                email. And use that!
+        3. Now you will be seeing "Welcome to AssemblyAI". On screen there will a variable like
+                "aai.settings.api_key = "8b8a**y***43**8rgh*********e*****e817".
+                This long alphanumeric word is your api_key.
+        4. Now copy and paste this api_key in the above input box.
+        """)
+
+    ##########################################################################################
+
+    # st.markdown("---")
+    st.header("", divider="gray")
+    st.write(" ")
+    st.write(" ")
+    st.write(" ")
+
+    ##########################################################################################
     file_formats_urls = r"https://www.assemblyai.com/docs/Concepts/faq"
 
     # Checking condition for inputs
-    uploaded_audio_file = st.file_uploader(label = "Upload your :red[Audio/Video] File", type = [".mp3", ".mp4", ".wav"])
+    uploaded_audio_file = st.file_uploader(label = "Upload your :red[Audio/Video] File :", type = [".mp3", ".mp4", ".wav"])
     if aai_api_key and not uploaded_audio_file:
         st.toast(body="API Key Uploaded", icon="👍") 
     if uploaded_audio_file and not aai_api_key:
@@ -78,6 +81,9 @@ if selected == "Audio/Video":
     #-----------------------------------------------------------------------------------------
 
     st.header("", divider="gray")
+    st.write(" ")
+    st.write(" ")
+    st.write(" ")
     # st.button("Start ShoViazaa...", on_click=start_summary, type="primary", use_container_width=True)
 
     #-----------------------------------------------------------------------------------------
@@ -93,6 +99,7 @@ if selected == "Audio/Video":
         models_summary = giveSummary.do_summarize(got_text)
 
         st.write(models_summary)
+        st.write(f"This summary is generated using :red[{len(models_summary.split(" "))} words] from your input")
         if models_summary:
             st.toast(body="Summarized your File", icon="✅")
             with st.expander(":red-background[Click here to read the transcript] of your audio file"):
@@ -109,32 +116,21 @@ if selected == "Text":
     if toggle_on:
         got_text = st.text_area("Type/ Paste your :red[text] :")
 
-        if aai_api_key and not got_text:
-            st.toast(body="API Key Uploaded", icon="👍") 
-        if got_text and not aai_api_key:
-            st.toast(body="Text Uploaded", icon="👍")
-
 #------------------------------------------------------------------------------------------------
 
         st.header("", divider="gray")
+        st.write(" ")
+        st.write(" ")
+        st.write(" ")
 
 #------------------------------------------------------------------------------------------------
 
-        if got_text and aai_api_key:
+        if got_text:
             st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
 
-            print(got_text)
-            got_text = list(filter(lambda y : len(y)>0, list(map(lambda x : x.strip(), got_text.split(" ")))))[:20_00_000]
-            print(got_text)
-
+            got_text = list(filter(lambda y : len(y)>0, list(map(lambda x : x.replace("\n", "").strip().replace("{", "(").replace("}", ")"), got_text.split(" ")))))[:15_000]
             words_count = len(got_text)
-            print(words_count)
-
             got_text = " ".join(got_text)
-            print(got_text)
-
-
-            
             
             models_summary = giveSummary.do_summarize(got_text)
 
@@ -152,21 +148,20 @@ if selected == "Text":
     if not toggle_on:
         uploaded_text_file = st.file_uploader(label = "Upload your :red[PDF] File :", type = [".pdf"])
 
-        if aai_api_key and not uploaded_text_file:
-            st.toast(body="API Key Uploaded", icon="👍") 
-        if uploaded_text_file and not aai_api_key:
-            st.toast(body="PDF File Uploaded", icon="👍")
-
 #------------------------------------------------------------------------------------------------
 
         st.header("", divider="gray")
+        st.write(" ")
+        st.write(" ")
+        st.write(" ")
 
 #------------------------------------------------------------------------------------------------
 
-        if uploaded_text_file and aai_api_key:
+        if uploaded_text_file:
             st.toast(body="Started Processing. Summary will be given soon", icon="🏋️‍♂️")
 
-            got_text, words_count = extractTextfromPDF.pullText(uploaded_text_file.read())
+            got_text, words_count = extractTextfromPDF.pullText(uploaded_text_file)
+            
 
             models_summary = giveSummary.do_summarize(got_text)
             st.write(models_summary)
