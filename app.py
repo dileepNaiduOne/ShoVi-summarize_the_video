@@ -95,7 +95,7 @@ if selected == "Audio/Video":
         models_summary = giveSummary.do_summarize(got_text)
 
         st.write(models_summary)
-        st.write(f"This summary is generated using :red[{len(models_summary.split(" "))} words] from your input")
+        st.write(f"This summary is generated using :red[{len(got_text.split(" "))} words] from your input")
         if models_summary:
             st.toast(body="Summarized your File", icon="✅")
             with st.expander(":red-background[Click here to read the transcript] of your audio file"):
