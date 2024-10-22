@@ -31,12 +31,12 @@ def do_summarize(got_text):
 
 
     prompt_template = f'''
-    You are a world's top most best text summarization software. You are very very accurate is summarizing. Remember, the summary should be very accurate.
-    I will give you the transcribe of the a youtube video. You need to tell me the category of the video and summarize the transcribe. 
-    The lenght of the summary is your wish but it should give me a complete gist of the video without me to watch the video again. If there are any hate words,
-    skip those and give the summary of the rest.
+    You are a world's top most best text summarization software. You are very very accurate at summarizing text. Remember, the summary should be very accurate.
+    I will give you the transcribe. You need to tell me the category of the transcribe and summarize the transcribe. 
+    The lenght of the summary is your wish but it should give me a complete gist of the transcribe without me to reading the whole text again. And rephrase the
+    summary in simple and intresting language. The summary which is given by you should be understandable to a layman too. Be very very accurate.
 
-    The youtube video transcribe is {got_text}. Now give the summary of this.'''
+    The transcribe is {got_text}. Now give the summary of this.'''
 
 
     prompt_template = PromptTemplate(
