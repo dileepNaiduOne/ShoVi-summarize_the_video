@@ -1,4 +1,11 @@
-# ShoVi: Summarize Evrything
+https://github.com/user-attachments/assets/916852f9-1351-418f-a9a3-a62823c51991
+
+<table style="border-collapse: collapse;">
+  <tr>
+    <td><img src="logo.png" alt="ShoVi Logo" height="50" width="50"></td>
+    <td><h1>ShoVi  —  Shorten Video</h1></td>
+  </tr>
+</table>
 
 ## Abstract
 
@@ -35,10 +42,6 @@ ShoVi is a user-friendly Python application designed to condense information int
    * **PDF:** Upload your PDF document.
 4. **Click "ShoVizzaa":** Initiate the summarization process. Click on "Shovizzaa"
 5. **View the summary:** The generated summary will be displayed below the input area.
-
-## Deployment Video
-
-[Link to Your Deployment Video]
 
 ## About Me
 
